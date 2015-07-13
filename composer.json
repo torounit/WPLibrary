@@ -1,0 +1,19 @@
+{
+  "name": "torounit/wp-library",
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=5.4"
+  },
+  "license": "GPL",
+  "authors": [
+    {
+      "name": "Hiroshi Urabe",
+      "email": "mail@torounit.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Torounit\\WPLibrary\\": "src"
+    }
+  }
+}
