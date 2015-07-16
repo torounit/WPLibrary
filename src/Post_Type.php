@@ -15,6 +15,9 @@ Class Post_Type {
 	/** @var array */
 	private $args;
 
+		/** @var array */
+	private $labels;
+
 	/**
 	 * @param string $post_type
 	 * @param string $post_type_name
@@ -23,8 +26,10 @@ Class Post_Type {
 	public function __construct( $post_type, $post_type_name, $args = [ ]  ) {
 		$this->post_type      = $post_type;
 		$this->post_type_name = $post_type_name;
-		$this->set_options( $args );
 
+		$labels = ( !empty($args['labels']) ) ? $args['labels'] : [];
+		$this->set_labels( $labels );
+		$this->set_options( $args );
 		$this->init();
 	}
 
@@ -45,12 +50,12 @@ Class Post_Type {
 	}
 
 	/**
-	 * Set Option.
+	 * Set Labels.
 	 *
 	 * @param $args
 	 */
-	public function set_options( $args ) {
-		$this->args = $this->create_options( $args );
+	public function set_labels( $args = [] ) {
+		$this->labels = $this->create_labels( $args );
 	}
 
 
@@ -58,8 +63,8 @@ Class Post_Type {
 	 * Create Labels.
 	 * @return array
 	 */
-	public function create_labels() {
-		return array(
+	public function create_labels( $args = [] ) {
+		$defaults = array(
 			'name'               => $this->post_type_name,
 			'singular_name'      => $this->post_type_name,
 			'add_new'            => '新規追加',
@@ -72,6 +77,17 @@ Class Post_Type {
 			'not_found_in_trash' => 'ゴミ箱の中から、' . $this->post_type_name . 'が見つかりませんでした。',
 			'menu_name'          => $this->post_type_name
 		);
+
+		return array_merge( $defaults, $args );
+	}
+
+	/**
+	 * Set Option.
+	 *
+	 * @param $args
+	 */
+	public function set_options( $args ) {
+		$this->args = $this->create_options( $args );
 	}
 
 	/**
@@ -82,9 +98,8 @@ Class Post_Type {
 	 *
 	 * @return array
 	 */
-	public function create_options( $args ) {
+	public function create_options( $args = [] ) {
 		$defaults = array(
-			'labels'            => $this->create_labels(),
 			'public'            => true,
 			'show_ui'           => true,
 			'show_in_admin_bar' => true,
@@ -113,7 +128,14 @@ Class Post_Type {
 		return array_merge( $defaults, $args );
 	}
 
+	/**
+	 *
+	 * Regiser Post Type.
+	 *
+	 */
 	public function register_post_type() {
+
+		$this->args['labels'] = $this->labels;
 		register_post_type( $this->post_type, $this->args );
 	}
 
