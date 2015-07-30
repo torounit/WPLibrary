@@ -31,9 +31,9 @@ Class Rewrite {
 
 
 	/** @var array */
-	private $endpoints = [ ];
+	private $endpoints = array();
 
-	private $rewrite_rules = [];
+	private $rewrite_rules = array();
 
 
 	private function __construct() {
@@ -42,11 +42,11 @@ Class Rewrite {
 
 	public function init() {
 
-		add_action( 'delete_option', [ $this, 'delete_option' ], 10 );
-		add_action( 'init', [ $this, 'add_rewrite' ], 9999 );
+		add_action( 'delete_option', array( $this, 'delete_option' ), 10 );
+		add_action( 'init', array( $this, 'add_rewrite' ), 9999 );
 
-		register_activation_hook( self::$file, [ __CLASS__, 'activation' ] );
-		register_deactivation_hook( self::$file, [ __CLASS__, 'deactivation' ] );
+		register_activation_hook( self::$file, array( __CLASS__, 'activation' ) );
+		register_deactivation_hook( self::$file, array( __CLASS__, 'deactivation' ) );
 
 	}
 
@@ -57,11 +57,11 @@ Class Rewrite {
 	 */
 	public function add_endpoint( $name, $places, $query_var = null ) {
 
-		$this->endpoints[] = [
+		$this->endpoints[] = array(
 			'name'      => $name,
 			'places'    => $places,
 			'query_var' => $query_var
-		];
+		);
 	}
 
 
@@ -72,11 +72,11 @@ Class Rewrite {
 	 */
 	public function add_rewrite_rule( $regex, $redirect, $after = 'bottom' ) {
 
-		$this->rewrite_rules[] = [
+		$this->rewrite_rules[] = array(
 			'regex'      => $regex,
 			'redirect'    => $redirect,
 			'after' => $after
-		];
+		);
 	}
 
 

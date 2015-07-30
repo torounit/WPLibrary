@@ -23,11 +23,11 @@ Class Post_Type {
 	 * @param string $post_type_name
 	 * @param array $args
 	 */
-	public function __construct( $post_type, $post_type_name, $args = [ ]  ) {
+	public function __construct( $post_type, $post_type_name, $args = array() ) {
 		$this->post_type      = $post_type;
 		$this->post_type_name = $post_type_name;
 
-		$labels = ( !empty($args['labels']) ) ? $args['labels'] : [];
+		$labels = ( !empty($args['labels']) ) ? $args['labels'] : array();
 		$this->set_labels( $labels );
 		$this->set_options( $args );
 		$this->init();
@@ -38,8 +38,8 @@ Class Post_Type {
 	 */
 	public function init() {
 
-		add_action( 'init', [ $this, 'register_post_type' ], 10 );
-		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
+		add_action( 'init', array( $this, 'register_post_type' ), 10 );
+		add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 	}
 
 	/**
@@ -54,16 +54,19 @@ Class Post_Type {
 	 *
 	 * @param $args
 	 */
-	public function set_labels( $args = [] ) {
+	public function set_labels( $args = array() ) {
 		$this->labels = $this->create_labels( $args );
 	}
 
 
 	/**
 	 * Create Labels.
+	 *
+	 * @param array $args
+	 *
 	 * @return array
 	 */
-	public function create_labels( $args = [] ) {
+	public function create_labels( $args = array() ) {
 		$defaults = array(
 			'name'               => $this->post_type_name,
 			'singular_name'      => $this->post_type_name,
@@ -98,7 +101,7 @@ Class Post_Type {
 	 *
 	 * @return array
 	 */
-	public function create_options( $args = [] ) {
+	public function create_options( $args = array() ) {
 		$defaults = array(
 			'public'            => true,
 			'show_ui'           => true,
@@ -106,11 +109,11 @@ Class Post_Type {
 			'menu_position'     => null,
 			'show_in_nav_menus' => true,
 			'has_archive'       => true,
-			'rewrite'           => [
+			'rewrite'           => array(
 				'with_front' => false,
 				'slug'       => $this->post_type,
 				'walk_dirs'  => false
-			],
+			),
 			'supports'          => array(
 				'title',
 				'author',

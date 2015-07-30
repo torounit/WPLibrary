@@ -7,7 +7,7 @@ use Torounit\WPLibrary\Admin\Taxonomy_Filter;
 Class Taxonomy {
 
 	/** @var array  */
-	private $post_type = [ ];
+	private $post_type = array();
 
 	/** @var string */
 	private $taxonomy;
@@ -19,7 +19,7 @@ Class Taxonomy {
 	private $args;
 
 	/** @var array  */
-	private $default_terms = [ ];
+	private $default_terms = array();
 
 
 	/**

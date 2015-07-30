@@ -5,8 +5,11 @@ namespace Torounit\WPLibrary;
 
 Class RS_CSV_ACF {
 
+	/**
+	 * constructor
+	 */
 	public function __construct() {
-		add_action( 'really_simple_csv_importer_post_saved', [ $this, 'really_simple_csv_importer_post_saved' ] );
+		add_action( 'really_simple_csv_importer_post_saved', array( $this, 'really_simple_csv_importer_post_saved' ) );
 	}
 
 
