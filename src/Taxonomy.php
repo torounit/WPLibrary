@@ -28,13 +28,13 @@ Class Taxonomy {
 	 * @param array|string $post_type
 	 * @param array $args
 	 */
-	public function __construct( $taxonomy, $taxonomy_name, $post_type = [ 'post' ], $args = [ ] ) {
+	public function __construct( $taxonomy, $taxonomy_name, $post_type = array( 'post' ), $args = array() ) {
 		$this->taxonomy      = $taxonomy;
 		$this->taxonomy_name = $taxonomy_name;
 		if ( is_array( $post_type ) ) {
 			$this->post_type = $post_type;
 		} else {
-			$this->post_type = [ $post_type ];
+			$this->post_type = array( $post_type );
 		}
 
 		$this->set_options( $args );
@@ -55,12 +55,9 @@ Class Taxonomy {
 	 * add hooks.
 	 */
 	private function init() {
-		add_action( 'init', function(){
-			$this->register_taxonomy();
-		}, 10 );
-		add_action( 'wp_loaded', function(){
-			$this->initalize_taxonomy();
-		}, 10 );
+
+		add_action( 'init', 'register_taxonomy', 10 );
+		add_action( 'wp_loaded', 'initalize_taxonomy', 10 );
 
 		if( !empty($this->args[ 'show_admin_column' ]) ) {
 			new Admin\Taxonomy_Filter( $this->taxonomy, $this->post_type );
@@ -99,7 +96,7 @@ Class Taxonomy {
 		$defaults = array(
 			'labels'            => $this->create_labels(),
 			'show_admin_column' => true,
-			'rewrite'           => [ "with_front" => false ],
+			'rewrite'           => array( "with_front" => false ),
 		);
 		return array_merge( $defaults, $args );
 	}
@@ -108,7 +105,7 @@ Class Taxonomy {
 	/**
 	 * register
 	 */
-	private function register_taxonomy() {
+	public function register_taxonomy() {
 		register_taxonomy( $this->taxonomy, $this->post_type, $this->args );
 	}
 
@@ -116,28 +113,29 @@ Class Taxonomy {
 	/**
 	 * add default terms.
 	 */
-	private function initalize_taxonomy() {
-
+	public function initalize_taxonomy() {
+		$self = $this;
 		if ( ! empty( $this->default_terms ) ) {
-			array_walk( $this->default_terms, function ( $term ) {
-				if ( ! term_exists( $term["name"], $this->taxonomy ) ) {
-					wp_insert_term( $term["name"], $this->taxonomy, $term );
-				}
-			} );
+			array_walk( $this->default_terms, array( $this, 'set_default_term') );
 		}
 	}
 
+	public function set_default_term( $term ) {
+		if ( ! term_exists( $term["name"], $this->taxonomy ) ) {
+			wp_insert_term( $term["name"], $this->taxonomy, $term );
+		}
+	}
 
 	/**
 	 * @param string $name
 	 * @param string $slug
 	 * @param array $args
 	 */
-	public function add_term( $name, $slug = '', $args = [ ] ) {
+	public function add_term( $name, $slug = '', $args = array() ) {
 		if ( ! $slug ) {
 			$slug = $name;
 		}
-		$term                  = array_merge( [ 'name' => $name, 'slug' => $slug ], $args );
+		$term                  = array_merge( array( 'name' => $name, 'slug' => $slug ), $args );
 		$this->default_terms[] = $term;
 	}
 
