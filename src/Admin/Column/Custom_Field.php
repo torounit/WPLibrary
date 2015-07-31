@@ -46,12 +46,14 @@ Class Custom_Field {
 	 */
 	protected function add_hooks() {
 
-		add_filter( 'manage_posts_columns', [ $this, 'manage_posts_columns' ] );
-		add_filter( 'manage_edit-' . $this->post_type . '_sortable_columns', [ $this, 'sortable_columns' ] );
-		add_action( 'manage_posts_custom_column', [ $this, 'manage_posts_custom_column' ] );
-		add_action( 'load-edit.php', function () {
-			add_filter( 'request', [ $this, 'sort_edit' ] );
-		} );
+		add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ) );
+		add_filter( 'manage_edit-' . $this->post_type . '_sortable_columns', array( $this, 'sortable_columns' ) );
+		add_action( 'manage_posts_custom_column', array( $this, 'manage_posts_custom_column' ) );
+		add_action( 'load-edit.php', array( $this, 'load_edit_init' ) );
+	}
+
+	public function load_edit_init() {
+		add_filter( 'request', array( $this, 'sort_edit' ) );
 	}
 
 	/**
@@ -129,10 +131,10 @@ Class Custom_Field {
 
 				$vars = array_merge(
 					$vars,
-					[
+					array(
 						'meta_key' => $this->field_key,
 						'orderby'  => ( $this->is_num ) ? 'meta_value_num' : 'meta_value',
-					]
+					)
 				);
 			}
 		}

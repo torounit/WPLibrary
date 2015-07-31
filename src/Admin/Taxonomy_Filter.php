@@ -20,10 +20,10 @@ Class Taxonomy_Filter {
 			$this->post_type = $post_type;
 		}
 		else {
-			$this->post_type = [ $post_type ];
+			$this->post_type = array( $post_type );
 		}
 
-		add_action( 'restrict_manage_posts', [ $this, 'add_post_taxonomy_restrict_filter' ] );
+		add_action( 'restrict_manage_posts', array( $this, 'add_post_taxonomy_restrict_filter' ) );
 	}
 
 	public function add_post_taxonomy_restrict_filter() {
