@@ -56,8 +56,8 @@ Class Taxonomy {
 	 */
 	private function init() {
 
-		add_action( 'init', 'register_taxonomy', 10 );
-		add_action( 'wp_loaded', 'initalize_taxonomy', 10 );
+		add_action( 'init', array( $this,'register_taxonomy'), 10 );
+		add_action( 'wp_loaded', array( $this,'initialize_taxonomy'), 10 );
 
 		if( !empty($this->args[ 'show_admin_column' ]) ) {
 			new Admin\Taxonomy_Filter( $this->taxonomy, $this->post_type );
@@ -113,7 +113,7 @@ Class Taxonomy {
 	/**
 	 * add default terms.
 	 */
-	public function initalize_taxonomy() {
+	public function initialize_taxonomy() {
 		$self = $this;
 		if ( ! empty( $this->default_terms ) ) {
 			array_walk( $this->default_terms, array( $this, 'set_default_term') );
