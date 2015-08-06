@@ -56,11 +56,18 @@ Class Custom_Field {
 		add_action( 'load-edit.php', array( $this, 'load_edit_init' ) );
 	}
 
+	/**
+	 * Fire only edit.php
+	 */
 	public function load_edit_init() {
 		add_filter( 'request', array( $this, 'sort_edit' ) );
 	}
 
 	/**
+	 * add_fiter wrapper.
+	 *
+	 * useage: $this->add_filter( $callback, $priority );
+	 *
 	 * @param callable $callback
 	 *
 	 * @param int $priority
@@ -94,7 +101,6 @@ Class Custom_Field {
 	}
 
 	/**
-	 *
 	 * Register Sortable Column.
 	 * @param array $columns
 	 *
@@ -107,7 +113,6 @@ Class Custom_Field {
 	}
 
 	/**
-	 *
 	 * Show Custom Field Value.
 	 * @param string $column_name
 	 */
