@@ -46,7 +46,7 @@ Class Custom_Field {
 
 
 	/**
-	 *
+	 * Add Hooks.
 	 */
 	protected function add_hooks() {
 
@@ -71,6 +71,8 @@ Class Custom_Field {
 
 
 	/**
+	 *
+	 * Add Custom Field Column.
 	 * @param array $columns
 	 *
 	 * @return array
@@ -94,6 +96,21 @@ Class Custom_Field {
 	}
 
 	/**
+	 *
+	 * Register Sortable Column.
+	 * @param array $columns
+	 *
+	 * @return array
+	 */
+	public function sortable_columns( $columns ) {
+		$columns[ $this->get_column_key() ] = $this->get_column_key();
+
+		return $columns;
+	}
+
+	/**
+	 *
+	 * Show Custom Field Value.
 	 * @param string $column_name
 	 */
 	public function manage_posts_custom_column( $column_name ) {
@@ -109,17 +126,6 @@ Class Custom_Field {
 
 		}
 
-	}
-
-	/**
-	 * @param array $columns
-	 *
-	 * @return array
-	 */
-	public function sortable_columns( $columns ) {
-		$columns[ $this->get_column_key() ] = $this->get_column_key();
-
-		return $columns;
 	}
 
 
