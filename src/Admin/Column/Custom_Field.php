@@ -127,6 +127,8 @@ Class Custom_Field {
 
 
 	/**
+	 *
+	 * convert orderby param to meta_key.
 	 * @param array $vars $wp_query->query_vars.
 	 *
 	 * @return array
