@@ -40,6 +40,10 @@ Class Custom_Field {
 		$this->add_hooks();
 	}
 
+	private function get_column_key() {
+		return "meta_".$this->field_key;
+	}
+
 
 	/**
 	 *
@@ -79,7 +83,7 @@ Class Custom_Field {
 
 			$keys = array_keys( $columns );
 			$values = array_values( $columns );
-			array_splice( $keys, $this->position, 0, $this->field_key );
+			array_splice( $keys, $this->position, 0, $this->get_column_key() );
 			array_splice( $values, $this->position, 0, $this->field_label );
 
 			return array_combine( $keys, $values );
@@ -97,10 +101,10 @@ Class Custom_Field {
 
 		if ( $post->post_type == $this->post_type ) {
 
-			if ( $column_name == $this->field_key ) {
+			if ( $column_name == $this->get_column_key() ) {
 				$column = get_post_meta( $post->ID, $this->field_key, true );
 				$column = apply_filters( 'admin_custom_column_' . $this->post_type . '_' . $this->field_key, $column );
-				echo  $column;
+				echo $column;
 			}
 
 		}
@@ -113,7 +117,7 @@ Class Custom_Field {
 	 * @return array
 	 */
 	public function sortable_columns( $columns ) {
-		$columns[ $this->field_key ] = $this->field_key;
+		$columns[ $this->get_column_key() ] = $this->get_column_key();
 
 		return $columns;
 	}
@@ -127,7 +131,7 @@ Class Custom_Field {
 	public function sort_edit( $vars ) {
 		if ( isset( $vars['post_type'] ) && $this->post_type == $vars['post_type'] ) {
 
-			if ( isset( $vars['orderby'] ) && $vars['orderby'] == $this->field_key ) {
+			if ( isset( $vars['orderby'] ) && $vars['orderby'] == $this->get_column_key() ) {
 
 				$vars = array_merge(
 					$vars,
