@@ -78,9 +78,7 @@ Class Custom_Field {
 	 * @return array
 	 */
 	public function manage_posts_columns( $columns ) {
-
-		global $post;
-
+		$post = get_post();
 		if ( $post->post_type == $this->post_type ) {
 
 			$keys = array_keys( $columns );
@@ -114,8 +112,7 @@ Class Custom_Field {
 	 * @param string $column_name
 	 */
 	public function manage_posts_custom_column( $column_name ) {
-		global $post;
-
+		$post = get_post();
 		if ( $post->post_type == $this->post_type ) {
 
 			if ( $column_name == $this->get_column_key() ) {
