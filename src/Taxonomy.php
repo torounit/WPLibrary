@@ -2,8 +2,6 @@
 
 namespace Torounit\WPLibrary;
 
-use Torounit\WPLibrary\Admin\Taxonomy_Filter;
-
 Class Taxonomy {
 
 	/** @var array  */
