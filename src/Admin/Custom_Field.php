@@ -1,8 +1,8 @@
 <?php
 
-namespace Torounit\WPLibrary\Admin\Column;
+namespace Torounit\WPLibrary\Admin;
 
-Class Custom_Field {
+Class Custom_Field_Column {
 
 	/** @var string */
 	private $field_key;
