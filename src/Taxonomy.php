@@ -56,7 +56,11 @@ Class Taxonomy {
 	 */
 	private function init() {
 
-		add_action( 'init', array( $this,'register_taxonomy'), 10 );
+		add_action( 'init', array( $this, 'register' ), 10 );
+		if( did_action('init') ) {
+			$this->register();
+		}
+
 		add_action( 'wp_loaded', array( $this,'initialize_taxonomy'), 10 );
 
 		if( !empty($this->args[ 'show_admin_column' ]) ) {
@@ -105,7 +109,7 @@ Class Taxonomy {
 	/**
 	 * register
 	 */
-	public function register_taxonomy() {
+	public function register() {
 		register_taxonomy( $this->taxonomy, $this->post_type, $this->args );
 	}
 
