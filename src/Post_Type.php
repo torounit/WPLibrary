@@ -15,7 +15,7 @@ Class Post_Type {
 	/** @var array */
 	private $args;
 
-		/** @var array */
+	/** @var array */
 	private $labels;
 
 	/**
@@ -38,7 +38,10 @@ Class Post_Type {
 	 */
 	public function init() {
 
-		add_action( 'init', array( $this, 'register_post_type' ), 10 );
+		add_action( 'init', array( $this, 'register' ), 10 );
+		if( did_action('init') ) {
+			$this->register();
+		}
 		add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 	}
 
@@ -136,7 +139,7 @@ Class Post_Type {
 	 * Regiser Post Type.
 	 *
 	 */
-	public function register_post_type() {
+	public function register() {
 
 		$this->args['labels'] = $this->labels;
 		register_post_type( $this->post_type, $this->args );
