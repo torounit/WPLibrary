@@ -38,7 +38,7 @@ Class Post_Type {
 	 */
 	public function init() {
 
-		add_action( 'init', array( $this, 'register' ), 10 );
+		add_action( 'init', array( $this, 'register' ), 20 );
 		if( did_action('init') ) {
 			$this->register();
 		}
